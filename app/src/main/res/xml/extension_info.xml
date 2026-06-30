@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionInfo
+    id="karoo-dfa-a1"
+    displayName="DFA a1 Extension"
+    fitFile="true"
+    icon="@android:drawable/ic_menu_info_details"
+    scansDevices="false">
+    
+    <DataType
+        typeId="Alpha1"
+        displayName="DFA a1"
+        description="DFA a1 real-time tracking"
+        graphical="true"
+        icon="@android:drawable/ic_menu_info_details" />
+        
+</ExtensionInfo>
