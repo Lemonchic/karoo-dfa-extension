@@ -5,6 +5,7 @@ import io.hammerhead.karooext.extension.DataTypeImpl
 import io.hammerhead.karooext.internal.Emitter
 import io.hammerhead.karooext.internal.ViewEmitter
 import io.hammerhead.karooext.models.DataPoint
+import io.hammerhead.karooext.models.DataType
 import io.hammerhead.karooext.models.StreamState
 import io.hammerhead.karooext.models.ViewConfig
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +23,7 @@ class DfaDataType(
         val job = CoroutineScope(Dispatchers.Default).launch {
             while (isActive) {
                 val value = dfaCalculator.compute()
-                val dataPoint = DataPoint(dataTypeId, mapOf("value" to value), "karoo-dfa-source")
+                val dataPoint = DataPoint(dataTypeId, mapOf(DataType.Field.SINGLE to value), "karoo-dfa-source")
                 emitter.onNext(StreamState.Streaming(dataPoint))
                 delay(1000)
             }

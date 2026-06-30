@@ -11,9 +11,11 @@ import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.util.Log
 import io.hammerhead.karooext.internal.Emitter
+import io.hammerhead.karooext.models.ConnectionStatus
 import io.hammerhead.karooext.models.DataPoint
 import io.hammerhead.karooext.models.DataType
 import io.hammerhead.karooext.models.DeviceEvent
+import io.hammerhead.karooext.models.OnConnectionStatus
 import io.hammerhead.karooext.models.OnDataPoint
 import java.util.UUID
 
@@ -39,12 +41,20 @@ class HrRrSensor(
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.d(TAG, "Connected to $uid")
                 try {
+                    emitter.onNext(OnConnectionStatus(ConnectionStatus.CONNECTED))
                     gatt.discoverServices()
                 } catch (e: SecurityException) {
                     Log.e(TAG, "SecurityException discovering services", e)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to emit CONNECTED status", e)
                 }
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 Log.d(TAG, "Disconnected from $uid")
+                try {
+                    emitter.onNext(OnConnectionStatus(ConnectionStatus.DISCONNECTED))
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to emit DISCONNECTED status", e)
+                }
                 close()
             }
         }
@@ -116,7 +126,7 @@ class HrRrSensor(
             hr
         }
 
-        val dataPoint = DataPoint(DataType.Type.HEART_RATE, mapOf(DataType.Type.HEART_RATE to hrValue.toDouble()), null)
+        val dataPoint = DataPoint(DataType.Type.HEART_RATE, mapOf(DataType.Field.HEART_RATE to hrValue.toDouble()), null)
         try {
             emitter.onNext(OnDataPoint(dataPoint))
         } catch (e: Exception) {

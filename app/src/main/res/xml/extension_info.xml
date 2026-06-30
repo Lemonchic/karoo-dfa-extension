@@ -10,7 +10,7 @@
         typeId="Alpha1"
         displayName="DFA a1"
         description="DFA a1 real-time tracking"
-        graphical="true"
+        graphical="false"
         icon="@android:drawable/ic_menu_info_details" />
         
 </ExtensionInfo>
