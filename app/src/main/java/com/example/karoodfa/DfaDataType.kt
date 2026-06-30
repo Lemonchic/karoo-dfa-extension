@@ -30,4 +30,13 @@ class DfaDataType(
         }
         emitter.setCancellable { job.cancel() }
     }
+
+    override fun startView(
+        context: Context,
+        config: ViewConfig,
+        emitter: ViewEmitter
+    ) {
+        val builder = DfaViewBuilder()
+        builder.buildView(context, emitter, dfaCalculator)
+    }
 }
