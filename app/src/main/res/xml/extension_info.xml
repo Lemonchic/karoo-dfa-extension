@@ -4,7 +4,7 @@
     displayName="DFA a1 Extension"
     fitFile="true"
     icon="@android:drawable/ic_menu_info_details"
-    scansDevices="false">
+    scansDevices="true">
     
     <DataType
         typeId="Alpha1"
